@@ -33,31 +33,27 @@ app.use(express.static(path.join(__dirname, 'public')));
 //Functions
 
 async function login(req, res) {
-console.log(1)
   let result;
   var {login, password} = req.body;
-    
     try{
-      console.log('ab')
       const dbRequest = await request()
-      console.log("a")
+
       const result = await dbRequest
         .input('Nazwa_Uzytkownika', sql.VarChar(50), login)
         .input('Haslo', sql.VarChar(50), password)
         .query('SELECT Email FROM Uzytkownicy WHERE Nazwa_Uzytkownika = @Nazwa_Uzytkownika AND Haslo = @Haslo')
-        console.log(2)
       if (result.rowsAffected[0] === 1) {
         req.session.userEmail = result.recordset[0];
         req.session.userLogin = login;
         console.log("User", login, "just logged on")
         showItems(req, res);
-        console.log(3)
       } else {
+        console.log('zjebalo sie', login, password)
         res.render('login', {title: 'Logownie', error: 'Login lub hasło niepoprawne'})
       }
     } catch (err) {
       res.render('login', {error: 'Error'})
-      console.error(err. login, password)
+      console.error(err)
     }
 }
 
