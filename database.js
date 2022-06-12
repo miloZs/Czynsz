@@ -2,8 +2,8 @@ const req = require('express/lib/request');
 const sql = require('mssql')
 
 const config = {
-    user: 'Adam',
-    password: 'root1234',
+    user: 'app',
+    password: 'app',
     database: 'RYNEK',
     server: 'localhost',
     options: {
